@@ -3,7 +3,7 @@
         Person <|-- Buyer: Extends
         Person <|-- Partner: Extends
         Buyer "0..n" --> "0..n" Product: Orders
-        Partner --> Product: Resells
+        Partner "0..n" --> "1..n" Product: Resells
         class Person {
             - string $name
             - string $email
