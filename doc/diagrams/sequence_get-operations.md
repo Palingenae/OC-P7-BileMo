@@ -23,9 +23,6 @@
             S -->> U: Permission denied
             note right of S: Response 403 - Forbidden
             note right of S: Security bundle
-        else User makes uncaught bad request
-            S -->> U: Uncaught exception
-            note right of S: Response 500 - Server Error
         else User request resource that does not exist in database
             S -->> U: Not found
             note right of S: Response 404 - Not found

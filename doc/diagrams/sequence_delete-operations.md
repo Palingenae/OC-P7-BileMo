@@ -23,9 +23,6 @@
             S -->> U: Permission denied
             note right of S: Response 403 - Forbidden
             note right of S: Security bundle
-        else User makes uncaught bad request
-            S -->> U: Uncaught exception
-            note right of S: Response 500 - Server Error
         end
     else User does not have API key
         S -->> U: API Key is missing
