@@ -32,5 +32,6 @@
             - string $screenSize
             - string $screenType
             - string $year
+            - float $price
         }
 ```
