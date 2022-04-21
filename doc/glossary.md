@@ -9,7 +9,7 @@ Le code a ses noms de variables en anglais, donc il est aussi important de tradu
 - **BileMo [BileMo]** : Commanditaire du projet.
 - **Personne [Person]** : Objet abstrait. Contient des propriétés communes aux entités héritées.
     - **Partenaire [partner]** : Partenaire commercial, considéré comme personne morale. Les clients de BileMo.
-    - **Acheteurs [buyer]**: Personne physique. Les personnes qui achètent les produits auprès des *Partenaires* commerciaux. 
+    - **Clients / Acheteurs [customer]**: Personne physique. Les personnes qui achètent les produits auprès des *Partenaires* commerciaux. 
 - **Product**: Ce que BileMo met dans son catalogue pour que les partenaires revedent.
 
 ## English
@@ -22,5 +22,5 @@ Code's variables are in English, but there are translated in French for people w
 - **BileMo** : Project's backers.
 - **Person** : Abstract object. Contains properties in common to the inherited objects.
     - **Partner** : Commercial Partner. BileMo's customers. Considered as a moral person because it's a company.
-    - **Buyer**: Private individuals. Persons who buy products from Partners. 
+    - **Customer**: Private individuals. Persons who buy products from Partners. 
 - **Product** : Object contained in BileMo's catalog for the attention of Partners.

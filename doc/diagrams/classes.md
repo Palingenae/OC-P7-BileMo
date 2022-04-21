@@ -1,8 +1,8 @@
 ```mermaid
     classDiagram
-        Person <|-- Buyer: Extends
+        Person <|-- Customer: Extends
         Person <|-- Partner: Extends
-        Buyer "0..n" --> "0..n" Product: Orders
+        Customer "0..n" --> "0..n" Product: Orders
         Partner "0..n" --> "1..n" Product: Resells
         class Person {
             - string $name
@@ -12,7 +12,7 @@
             - string $phoneNumber
         }
         %% Those who will order the products %%
-        class Buyer {
+        class Customer {
             - Collection<Product> $orders
         }
         %% As in BileMo's Commercial Partner %%
