@@ -5,10 +5,12 @@
     participant D as <<Interface>><br/>Database / Doctrine
 
     note left of U: This sequence is used <br/>for all GET API operations<br/>which display all requested data <br/>as list or detail
-    U ->> S: Request Partners / Customers / Products
+    U ->> S: Request resource
     activate U
     activate S
+    note right of U: Can be new Partner, Customer, or Product
     alt User has API key
+        S -->> S: Security checks role
         alt Request is correct
             S ->> D: Select resource by id or a Collection
             activate D
@@ -17,10 +19,6 @@
             deactivate D
             S -->> U: Display data as JSON
             note right of S: Response 200 - OK
-        else User makes caught bad request
-            S -->> U: Validation conditions are not met
-            note right of S: Response 400 - Bad Request
-            note right of S: Validator bundle
         else User makes request out of their roles
             S -->> U: Permission denied
             note right of S: Response 403 - Forbidden
