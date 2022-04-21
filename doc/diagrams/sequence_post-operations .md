@@ -4,7 +4,7 @@
     participant S as <<Interface>><br/>Symfony
     participant D as <<Interface>><br/>Database / Doctrine
 
-    note left of U: This sequence is used <br/>for all GET API operations<br/>which display all requested data <br/>as list or detail
+    note left of U: POST OPERATION<br/>This sequence is used <br/>for all POST API operations<br/>which create new resource
     activate U
     U -->> U: Input new resource into client in JSON format
     note right of U: Can be new Partner, Customer, or Product
