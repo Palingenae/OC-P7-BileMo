@@ -2,10 +2,11 @@
     classDiagram
         Person <|-- Customer: Extends
         Person <|-- Partner: Extends
-        Customer "0..n" --> "0..n" Product: Orders
-        Partner "0..n" --> "1..n" Product: Resells
-        Partner "1..n" --> "0..n" Customer: Sells to
+        Customer "0..n" --* "0..n" Product: Orders
+        Partner "0..n" --* "1..n" Product: Resells
+        Partner "1..n" --* "0..n" Customer: Sells to
         class Person {
+            <<abstract>>
             - string $name
             - string $email
             - string $password
