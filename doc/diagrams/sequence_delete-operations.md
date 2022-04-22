@@ -5,7 +5,7 @@
     participant D as <<Interface>><br/>Database / Doctrine
 
     note left of U: DELETE OPERATION<br/>Deletes selected resource
-    U ->> S: Request resource to delete in client in JSON format
+    U ->> S: Request resource to delete
     activate U
     activate S
     note right of U: Can be new Partner, Customer, or Product
@@ -19,12 +19,12 @@
             deactivate D
             S -->> U: Display Response
             note right of S: Response 200 - OK
-        else User makes request out of their roles
+        else User makes request they don't have the rights for
             S -->> U: Permission denied
             note right of S: Response 403 - Forbidden
             note right of S: Security bundle
         end
-    else User does not have API key
+    else User does not have API key or bad API key
         S -->> U: API Key is missing
         note right of S: Response 401 - Unauthorized
         note right of S: JWT and security
