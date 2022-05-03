@@ -11,37 +11,41 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $modelName;
+    private string $modelName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $brand;
+    private string $brand;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $operatingSystem;
+    private string $operatingSystem;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $cpu;
+    private string $cpu;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $storage;
+    private string $storage;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $screenSize;
+    private string $screenSize;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $screenType;
+    private string $screenType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $year;
+    private string $year;
 
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
-    private $price;
+    private string $price;
 
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders')]
-    private $customer;
+    private Customer $customer;
+
+    #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $reseller;
 
     public function getId(): ?int
     {
@@ -164,6 +168,18 @@ class Product
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getReseller(): ?Partner
+    {
+        return $this->reseller;
+    }
+
+    public function setReseller(?Partner $reseller): self
+    {
+        $this->reseller = $reseller;
 
         return $this;
     }
