@@ -8,14 +8,24 @@ use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function loadPartners(ObjectManager $manager): void
     {
         for ($i = 0; $i <= 3; ++$i) {
             $partner = new Partner();
             $faker = Factory::create('fr_FR');
+            $slugger = new AsciiSlugger();
 
             $partnerFirstname = $faker->firstname();
             $partnerLastname = $faker->lastname();
@@ -24,9 +34,18 @@ class AppFixtures extends Fixture
             /* For the sake of consistency */
             $partner->setName($partnerCompany);
             $partner->setEmail(
-                strtolower($partnerFirstname).'.'.strtolower($partnerLastname).'@'.$partnerCompany.'.'.$faker->tld()
+                strtolower($slugger->slug($partnerFirstname)).'.'.
+                strtolower($slugger->slug($partnerLastname)).'@'.
+                trim(strtolower($slugger->slug($partnerCompany)), " ").'.'.
+                $faker->tld()
             );
-            $partner->setPassword('partnerPassword');
+            
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $partner,
+                'partnerPassword'
+            );
+
+            $partner->setPassword($hashedPassword);
             $partner->setPostalAddress(
                 $faker->address());
             $partner->setPhoneNumber($faker->mobileNumber());
@@ -47,6 +66,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i <= 20; ++$i) {
             $customer = new Customer();
             $faker = Factory::create('fr_FR');
+            $slugger = new AsciiSlugger();
 
             $customerFirstname = $faker->firstname();
             $customerLastname = $faker->lastname();
@@ -56,8 +76,16 @@ class AppFixtures extends Fixture
 
             $customer->setName($customerFirstname.' '.$customerLastname);
             $customer->setEmail(
-                strtolower($customerFirstname).'.'.strtolower($customerLastname).'@'.$faker->freeEmailDomain());
-            $customer->setPassword('customerPassword');
+                strtolower($slugger->slug($customerFirstname)).'.'.
+                strtolower($slugger->slug($customerLastname)).'@'.
+                $faker->freeEmailDomain());
+
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $customer,
+                'customerPassword'
+            );
+
+            $customer->setPassword($hashedPassword);
             $customer->setPostalAddress(
                 $faker->address()
             );
