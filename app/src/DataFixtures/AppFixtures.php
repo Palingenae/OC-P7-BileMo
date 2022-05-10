@@ -36,10 +36,10 @@ class AppFixtures extends Fixture
             $partner->setEmail(
                 strtolower($slugger->slug($partnerFirstname)).'.'.
                 strtolower($slugger->slug($partnerLastname)).'@'.
-                trim(strtolower($slugger->slug($partnerCompany)), " ").'.'.
+                trim(strtolower($slugger->slug($partnerCompany)), ' ').'.'.
                 $faker->tld()
             );
-            
+
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $partner,
                 'partnerPassword'
