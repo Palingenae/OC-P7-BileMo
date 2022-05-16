@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 class Customer implements UserInterface, PasswordAuthenticatedUserInterface
@@ -15,22 +16,23 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    protected int $id;
+    #[Groups('customers')]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $email;
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $password;
+    private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $postalAddress;
+    private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $phoneNumber;
+    private string $phoneNumber;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Product::class)]
     private Collection $orders;

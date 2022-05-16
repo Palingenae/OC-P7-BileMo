@@ -1,6 +1,7 @@
-controllers:
-    resource: ../src/Controller/
-    type: annotation
+api_get_products:
+    path: /products
+    controller: App\Controller\ProductController::listAllProducts
+    methods: GET
 
 kernel:
     resource: ../src/Kernel.php
