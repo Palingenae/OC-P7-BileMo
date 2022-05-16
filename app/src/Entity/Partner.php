@@ -28,7 +28,6 @@ class Partner implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
