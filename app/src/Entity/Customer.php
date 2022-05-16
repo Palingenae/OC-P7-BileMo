@@ -20,18 +20,22 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('customers')]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('customers')]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('customers')]
     private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('customers')]
     private string $phoneNumber;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Product::class)]

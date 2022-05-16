@@ -47,6 +47,7 @@ class Partner implements UserInterface, PasswordAuthenticatedUserInterface
     private string $siret;
 
     #[ORM\OneToMany(mappedBy: 'reseller', targetEntity: Customer::class)]
+    #[Groups('partners')]
     private Collection $customers;
 
     #[ORM\OneToMany(mappedBy: 'reseller', targetEntity: Product::class)]
