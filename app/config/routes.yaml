@@ -3,6 +3,10 @@ api_get_products:
     controller: App\Controller\ProductController::listAllProducts
     methods: GET
 
+api_get_one_product:
+    path: /products/{id}
+    controller: App\Controller\ProductController::getOneProduct
+
 kernel:
     resource: ../src/Kernel.php
     type: annotation

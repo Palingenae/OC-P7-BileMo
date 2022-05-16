@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Repository\ProductRepository;
-use Normalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 class ProductController extends AbstractController
@@ -27,17 +21,40 @@ class ProductController extends AbstractController
         $this->repository = $repository;
     }
 
-    public function listAllProducts(NormalizerInterface $normalizer)
+    public function listAllProducts(NormalizerInterface $normalizer): Response
     {
         try {
             $products = $this->repository->findAll();
 
-            $normalizedProducts = $normalizer->normalize($products, 'json', ['groups' => ['products', 'partners']]);
+            $normalizedProducts = $normalizer->normalize($products, 'json', ['groups' => ['products']]);
 
             return new JsonResponse($normalizedProducts, 200);
         } catch (Throwable) {
             return new JsonResponse(
-                ['errors' => ['Something is wrong. Please check again.']],
+                ['errors' => ['Quelque chose ne fonctionne pas, veuillez vérifier votre requête.']],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function getOneProduct(int $id, NormalizerInterface $normalizer): Response
+    {
+        try {
+            $product = $this->repository->find($id);
+
+            if (!$product instanceof Product) {
+                return new JsonResponse(
+                    ['errors' => "Le produit spécifié $id ne peut pas être trouvé."],
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $normalizedProduct = $normalizer->normalize($product, 'json', ['groups' => ['products', 'partners']]);
+
+            return new JsonResponse($normalizedProduct, Response::HTTP_OK);
+        } catch (Throwable) {
+            return new JsonResponse(
+                ['errors' => ['Quelque chose ne fonctionne pas, veuillez vérifier votre requête.']],
                 Response::HTTP_BAD_REQUEST
             );
         }
