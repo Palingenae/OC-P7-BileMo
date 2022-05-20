@@ -16,34 +16,34 @@ class Partner implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups('partners')]
+    #[Groups('partners', 'reseller')]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups('partners', 'reseller')]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups(['partners', 'reseller'])]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups(['partners', 'reseller'])]
     private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups(['partners', 'reseller'])]
     private string $phoneNumber;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups(['partners', 'reseller'])]
     private string $vatNumber;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('partners')]
+    #[Groups(['partners', 'reseller'])]
     private string $siret;
 
     #[ORM\OneToMany(mappedBy: 'reseller', targetEntity: Customer::class)]

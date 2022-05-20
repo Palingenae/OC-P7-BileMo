@@ -11,9 +11,9 @@ api_get_customers_from_partner:
     path: /partners/{id}/customers
     controller: App\Controller\PartnerController::getAllCustomersFromPartner
 
-# api_get_customer_from_partner:
-#     path: /partner/{id}/customers/{id}
-#     controller: App\Controller\PartnerController::getOneCustomerFromPartner
+api_get_customer_from_partner:
+    path: /partners/{partnerId}/customers/{customerId}
+    controller: App\Controller\PartnerController::getOneCustomerFromPartner
 
 kernel:
     resource: ../src/Kernel.php

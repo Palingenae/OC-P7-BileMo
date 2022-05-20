@@ -43,6 +43,7 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'customers')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['customers', 'reseller'])]
     private Partner $reseller;
 
     #[ORM\Column(type: 'json')]
