@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Throwable;
 
@@ -27,7 +28,7 @@ class CustomerController extends AbstractController
         $this->partnerRepository = $partnerRepository;
     }
 
-    public function createCustomer(Request $request, CustomerValidator $validator): Response
+    public function createCustomer(Request $request, CustomerValidator $validator, PasswordHasherInterface $passwordHasher): Response
     {
         try {
             $data = $request->request->all();
@@ -58,7 +59,7 @@ class CustomerController extends AbstractController
             $customer = new Customer();
             $customer->setName($data['name']);
             $customer->setEmail($data['email']);
-            $customer->setPassword($data['password']);
+            $customer->setPassword($passwordHasher->hash($data['password']));
             $customer->setPostalAddress($data['postalAddress']);
             $customer->setPhoneNumber($data['phoneNumber']);
             $customer->setReseller(
