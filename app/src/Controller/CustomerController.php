@@ -76,4 +76,20 @@ class CustomerController extends AbstractController
             );
         }
     }
+
+    public function deleteCustomer(int $partnerId, int $customerId): Response
+    {
+        $customer = $this->customerRepository->find($customerId);
+
+        if (!$customer instanceof Customer) {
+            return new JsonResponse(
+                ['errors' => "Impossible de supprimer ce-tte client-e. Ce profil a soit déjà été supprimé, ou n'a jamais existé."],
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $this->customerRepository->remove($customer);
+
+        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.']);
+    }
 }
