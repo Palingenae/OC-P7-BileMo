@@ -51,9 +51,6 @@ class Product
     #[Groups('products')]
     private string $price;
 
-    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders')]
-    private Customer $customer;
-
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('partners')]
@@ -168,18 +165,6 @@ class Product
     public function setPrice(string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
 
         return $this;
     }

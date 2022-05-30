@@ -8,13 +8,11 @@ use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use App\Repository\PartnerRepository;
 use App\Validation\CustomerValidator;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Throwable;
 
 class CustomerController extends AbstractController
@@ -22,7 +20,7 @@ class CustomerController extends AbstractController
     private CustomerRepository $customerRepository;
     private PartnerRepository $partnerRepository;
 
-    public function __construct(CustomerRepository $customerRepository, ?PartnerRepository $partnerRepository) 
+    public function __construct(CustomerRepository $customerRepository, ?PartnerRepository $partnerRepository)
     {
         $this->customerRepository = $customerRepository;
         $this->partnerRepository = $partnerRepository;
@@ -37,22 +35,20 @@ class CustomerController extends AbstractController
 
             $violations = $validator->validate($data);
 
-            if (0 !== count($violations))
-            {
-                foreach($violations as $violation) {
+            if (0 !== count($violations)) {
+                foreach ($violations as $violation) {
                     $errors[$violation->getPropertyPath()][] = $violation->getMessage();
                 }
 
                 return new JsonResponse(
-                    ['errors' => $errors], 
+                    ['errors' => $errors],
                     Response::HTTP_BAD_REQUEST
                 );
             }
 
-            if ($this->partnerRepository->find($data['reseller']) === null)
-            {
+            if (null === $this->partnerRepository->find($data['reseller'])) {
                 return new JsonResponse([
-                    'errors' => 'Impossible de créer cet utilisateur car son revendeur ne semble pas exister. Veuillez vérifier.'
+                    'errors' => 'Impossible de créer cet utilisateur car son revendeur ne semble pas exister. Veuillez vérifier.',
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
@@ -75,5 +71,21 @@ class CustomerController extends AbstractController
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+    }
+
+    public function deleteCustomer(int $partnerId, int $customerId): Response
+    {
+        $customer = $this->customerRepository->find($customerId);
+
+        if (!$customer instanceof Customer) {
+            return new JsonResponse(
+                ['errors' => "Impossible de supprimer ce-tte client-e. Ce profil a soit déjà été supprimé, ou n'a jamais existé."],
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $this->customerRepository->remove($customer, true);
+
+        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.']);
     }
 }
