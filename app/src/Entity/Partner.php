@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
 class Partner implements UserInterface, PasswordAuthenticatedUserInterface
@@ -15,29 +16,38 @@ class Partner implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    protected int $id;
-    #[ORM\Column(type: 'string', length: 255)]
-    protected string $name;
+    #[Groups('partners', 'reseller')]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $email;
+    #[Groups('partners', 'reseller')]
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $password;
+    #[Groups(['partners', 'reseller'])]
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $postalAddress;
+    private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $phoneNumber;
+    #[Groups(['partners', 'reseller'])]
+    private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['partners', 'reseller'])]
+    private string $phoneNumber;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['partners', 'reseller'])]
     private string $vatNumber;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['partners', 'reseller'])]
     private string $siret;
 
     #[ORM\OneToMany(mappedBy: 'reseller', targetEntity: Customer::class)]
+    #[Groups('partners')]
     private Collection $customers;
 
     #[ORM\OneToMany(mappedBy: 'reseller', targetEntity: Product::class)]

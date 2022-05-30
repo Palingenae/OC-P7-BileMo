@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -11,41 +12,49 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups('products')]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+
     private string $modelName;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $brand;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $operatingSystem;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $cpu;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $storage;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $screenSize;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $screenType;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('products')]
     private string $year;
 
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
+    #[Groups('products')]
     private string $price;
-
-    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders')]
-    private Customer $customer;
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private $reseller;
+    #[Groups('partners')]
+    private Partner $reseller;
 
     public function getId(): ?int
     {
@@ -156,18 +165,6 @@ class Product
     public function setPrice(string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
 
         return $this;
     }

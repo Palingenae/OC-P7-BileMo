@@ -1,6 +1,31 @@
-controllers:
-    resource: ../src/Controller/
-    type: annotation
+api_get_products:
+    path: /products
+    controller: App\Controller\ProductController::listAllProducts
+    methods: GET
+
+api_get_one_product:
+    path: /products/{id}
+    controller: App\Controller\ProductController::getOneProduct
+    methods: GET
+
+api_get_customers_from_partner:
+    path: /partners/{id}/customers
+    controller: App\Controller\PartnerController::getAllCustomersFromPartner
+    methods: GET
+
+api_get_customer_from_partner:
+    path: /partners/{partnerId}/customers/{customerId}
+    controller: App\Controller\PartnerController::getOneCustomerFromPartner
+    methods: GET
+
+api_create_new_user:
+    path: /customers/new
+    controller: App\Controller\CustomerController::createCustomer
+    methods: POST
+
+api_delete_customer:
+    path: /partners/{partnerId}/customers/{customerId}/delete
+    controller: App\Controller\CustomerController::deleteCustomer
 
 kernel:
     resource: ../src/Kernel.php

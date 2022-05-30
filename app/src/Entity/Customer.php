@@ -4,10 +4,10 @@ namespace App\Entity;
 
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 class Customer implements UserInterface, PasswordAuthenticatedUserInterface
@@ -15,28 +15,31 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    protected int $id;
+    #[Groups('customers')]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $name;
+    #[Groups('customers')]
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $email;
+    #[Groups('customers')]
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $password;
+    private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $postalAddress;
+    #[Groups('customers')]
+    private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
-    protected string $phoneNumber;
-
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Product::class)]
-    private Collection $orders;
+    #[Groups('customers')]
+    private string $phoneNumber;
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'customers')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['customers', 'reseller'])]
     private Partner $reseller;
 
     #[ORM\Column(type: 'json')]
@@ -112,31 +115,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Product $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Product $order): self
-    {
-        $this->orders->removeElement($order);
-
-        return $this;
-    }
-
     public function getReseller(): ?Partner
     {
         return $this->reseller;
@@ -152,7 +130,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_CUSTOMER';
 
         return array_unique($roles);
