@@ -88,7 +88,7 @@ class CustomerController extends AbstractController
             );
         }
 
-        $this->customerRepository->remove($customer);
+        $this->customerRepository->remove($customer, true);
 
         return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.']);
     }

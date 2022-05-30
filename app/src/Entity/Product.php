@@ -51,7 +51,7 @@ class Product
     #[Groups('products')]
     private string $price;
 
-    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders')]
+    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders', cascade: ['remove'])]
     private Customer $customer;
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'products')]

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CustomerRepository;
+use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,10 +39,10 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups('customers')]
     private string $phoneNumber;
 
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Product::class)]
+    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Product::class, cascade: ['persist', 'remove'])]
     private Collection $orders;
 
-    #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'customers')]
+    #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'customers', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['customers', 'reseller'])]
     private Partner $reseller;
