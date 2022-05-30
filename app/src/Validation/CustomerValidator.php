@@ -7,7 +7,6 @@ namespace App\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Webmozart\Assert\Assert as AssertAssert;
 
 class CustomerValidator
 {
@@ -26,7 +25,7 @@ class CustomerValidator
                 new Assert\Length([
                 'min' => 2,
                 'max' => 50,
-            ])],
+            ]), ],
             'email' => [
                 new Assert\NotBlank(),
                 new Assert\Email(),
@@ -35,8 +34,8 @@ class CustomerValidator
                 new Assert\NotBlank(),
                 new Assert\Length([
                     'min' => 8,
-                    'max' => 64
-            ])],
+                    'max' => 64,
+            ]), ],
             'postalAddress' => [
                 new Assert\NotBlank(),
             ],
@@ -47,9 +46,9 @@ class CustomerValidator
                 new Assert\NotBlank(),
                 new Assert\Regex(
                     pattern: "/\d+/",
-                    message: "Cette valeur doit être un nombre"
-                )
-            ]
+                    message: 'Cette valeur doit être un nombre'
+                ),
+            ],
         ]);
 
         return $this->validator->validate($data, $validations);
