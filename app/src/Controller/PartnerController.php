@@ -6,8 +6,8 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Partner;
-use App\Repository\PartnerRepository;
 use App\Repository\CustomerRepository;
+use App\Repository\PartnerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

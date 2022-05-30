@@ -109,9 +109,6 @@ class AppFixtures extends Fixture
             $designatedPartner = rand(0, 2);
             $partner = $this->getReference('partner'.$designatedPartner);
 
-            $designatedCustomer = rand(0, 19);
-            $customer = $this->getReference('customer'.$designatedCustomer);
-
             $product->setModelName($faker->words(2, 6, true));
             $product->setBrand($faker->word());
             $product->setOperatingSystem($faker->word());
@@ -121,7 +118,6 @@ class AppFixtures extends Fixture
             $product->setScreenType('Mini LED');
             $product->setPrice((string) $faker->randomFloat(2, 300, 1200));
             $product->setYear($faker->year('-4 years'));
-            $product->setCustomer($customer);
             $product->setReseller($partner);
 
             $manager->persist($product);
