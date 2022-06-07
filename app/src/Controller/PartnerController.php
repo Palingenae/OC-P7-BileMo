@@ -45,6 +45,8 @@ class PartnerController extends AbstractController
         $partner = $this->partnerRepository->find($partnerId);
         $customer = $this->customerRepository->find($customerId);
 
+        $this->denyAccessUnlessGranted('read', $customer);
+
         if (!$partner instanceof Partner) {
             return new JsonResponse(
                 ['errors' => "Le partenaire spécifié $partnerId ne peut pas être trouvé."],

@@ -1,31 +1,34 @@
 api_get_products:
-    path: /products
+    path: /api/products
     controller: App\Controller\ProductController::listAllProducts
     methods: GET
 
 api_get_one_product:
-    path: /products/{id}
+    path: /api/products/{id}
     controller: App\Controller\ProductController::getOneProduct
     methods: GET
 
 api_get_customers_from_partner:
-    path: /partners/{id}/customers
+    path: /api/partners/{id}/customers
     controller: App\Controller\PartnerController::getAllCustomersFromPartner
     methods: GET
 
 api_get_customer_from_partner:
-    path: /partners/{partnerId}/customers/{customerId}
+    path: /api/partners/{partnerId}/customers/{customerId}
     controller: App\Controller\PartnerController::getOneCustomerFromPartner
     methods: GET
 
 api_create_new_user:
-    path: /customers/new
+    path: /api/customers/new
     controller: App\Controller\CustomerController::createCustomer
     methods: POST
 
 api_delete_customer:
-    path: /partners/{partnerId}/customers/{customerId}/delete
+    path: /api/partners/{partnerId}/customers/{customerId}/delete
     controller: App\Controller\CustomerController::deleteCustomer
+
+api_login_check:
+    path: /api/login_check
 
 kernel:
     resource: ../src/Kernel.php
