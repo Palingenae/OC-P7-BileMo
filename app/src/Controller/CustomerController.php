@@ -81,7 +81,7 @@ class CustomerController extends AbstractController
         }
     }
 
-    public function deleteCustomer(int $partnerId, int $customerId): Response
+    public function deleteCustomer(int $customerId): Response
     {
         $customer = $this->customerRepository->find($customerId);
 
@@ -94,6 +94,8 @@ class CustomerController extends AbstractController
 
         $this->customerRepository->remove($customer, true);
 
-        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.']);
+        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.'],
+        Response::HTTP_NO_CONTENT
+    );
     }
 }
