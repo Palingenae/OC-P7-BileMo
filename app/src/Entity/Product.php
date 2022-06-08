@@ -12,7 +12,7 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -20,40 +20,40 @@ class Product
     private string $modelName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $brand;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $operatingSystem;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $cpu;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $storage;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $screenSize;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $screenType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $year;
 
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
-    #[Groups('products')]
+    #[Groups(['products'])]
     private string $price;
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('partners')]
+    #[Groups(['partners'])]
     private Partner $reseller;
 
     public function getId(): ?int
