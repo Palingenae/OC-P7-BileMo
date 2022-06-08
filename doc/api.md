@@ -5,7 +5,23 @@
 En cas de doute vis à vis des termes, référez vous au [glossaire](glossary.md).
 
 ---
+## Authentification
+Pour accéder à l'API nue, il est nécessaire d'utiliser un token JWT pour toute action souhaitée. Il existe plusieurs manières d'obtenir le token en question.
 
+### Terminal
+
+À travers le terminal, utilisez cette commande, elle vous donnera en réponse le token à condition que les credentials sont corrects.
+```sh
+curl -X POST -H "Content-Type: application/json" https://localhost/api/login_check -d '{"username":"johndoe","password":"test"}'
+```
+
+**IMPORTANT !**
+Il est important de noter, au cas où vous travaillez dans un environnement où une personne tierce peut accéder à votre machine, d'entrer un espace avant d'effectuer la commande dans votre terminal. Ainsi, la personne tentant de prendre contrôle de votre appareil ne pourra pas accéder à la commande à travers l'historique en cas de nouvelle session de terminal.
+
+### Client API 
+Ceci est valable pour *[Postman](https://www.postman.com/)*, *[Thunder dans Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)*, etc.
+
+---
 ## Produits
 ### Consulter la liste des produits BileMo
 #### Route
