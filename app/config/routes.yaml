@@ -26,6 +26,7 @@ api_create_new_user:
 api_delete_customer:
     path: /partners/{partnerId}/customers/{customerId}/delete
     controller: App\Controller\CustomerController::deleteCustomer
+    methods: DELETE
 
 kernel:
     resource: ../src/Kernel.php
