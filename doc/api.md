@@ -21,6 +21,16 @@ Il est important de noter, au cas où vous travaillez dans un environnement où 
 ### Client API 
 Ceci est valable pour *[Postman](https://www.postman.com/)*, *[Thunder dans Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)*, etc.
 
+Lorsque vous vous voudrez utiliser le token pour faire vos requêtes, avec Postman, vous allez avoir 4 étapes
+
+0. Interface de Postman sans intervention utilisateur
+![Premier démarrage de Postman](screenshots/postman_00-initialState.png)
+
+1.Entrez vos informations de mot de passe dans le chemin `/login_check` dans le corps en raw JSON
+![Entrer son mot de passe et nom d'utilisateur pour obtenir le token](screenshots/postman_01-enterCredentials.png)
+![Obtenir le token en réponse](screenshots/postman_02-getResponseToken.png)
+![Utilisation du token dans une requête vers l'API](screenshots/postman_03-useTokenMakeRequest.png)
+
 ---
 ## Produits
 ### Consulter la liste des produits BileMo
