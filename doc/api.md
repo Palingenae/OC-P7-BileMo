@@ -26,10 +26,11 @@ Lorsque vous vous voudrez utiliser le token pour faire vos requêtes, avec Postm
 0. Interface de Postman sans intervention utilisateur
 ![Premier démarrage de Postman](screenshots/postman_00-initialState.png)
 
-1.Entrez vos informations de mot de passe dans le chemin `/login_check` dans le corps en raw JSON
+1. Utilisez le chemin `/login_check` avec la méthode `POST` et entrez plus bas vos informations dans le corps en raw JSON selon cette syntaxe. Vous obtiendrez le token
 ![Entrer son mot de passe et nom d'utilisateur pour obtenir le token](screenshots/postman_01-enterCredentials.png)
-![Obtenir le token en réponse](screenshots/postman_02-getResponseToken.png)
-![Utilisation du token dans une requête vers l'API](screenshots/postman_03-useTokenMakeRequest.png)
+
+1. Accédez à l'onglet "Authorization" avec le type "Bearer token", et collez votre token reçu à l'étape précédence dans le champ adéquat. Grâce à cela, vous pourrez effectuer vos requêtes pendant 30 minutes avec ce token.
+![Utilisation du token dans une requête vers l'API](screenshots/postman_02-useTokenMakeRequest.png)
 
 ---
 ## Produits
