@@ -9,6 +9,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\PartnerRepository;
 use App\Validation\CustomerValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +27,11 @@ class CustomerController extends AbstractController
         $this->partnerRepository = $partnerRepository;
     }
 
-    public function createCustomer(Request $request, CustomerValidator $validator, PasswordHasherInterface $passwordHasher): Response
+    public function createCustomer($customer, Request $request, CustomerValidator $validator, PasswordHasherInterface $passwordHasher): Response
     {
         try {
+            $this->denyAccessUnlessGranted('read', $customer);
+
             $data = $request->request->all();
 
             $errors = [];
@@ -65,6 +68,11 @@ class CustomerController extends AbstractController
             $this->customerRepository->add($customer, true);
 
             return new JsonResponse(['message' => 'OK, utilisateur créé'], 201);
+        } catch (AccessDeniedException) {
+            return new JsonResponse(
+                ['error' => ['Vous n\'avez pas la permission de faire cette action']],
+                Response::HTTP_UNAUTHORIZED
+            );
         } catch (Throwable) {
             return new JsonResponse(
                 ['errors' => ['Désolés, quelque chose ne fonctionne pas']],
@@ -73,7 +81,7 @@ class CustomerController extends AbstractController
         }
     }
 
-    public function deleteCustomer(int $partnerId, int $customerId): Response
+    public function deleteCustomer(int $customerId): Response
     {
         $customer = $this->customerRepository->find($customerId);
 
@@ -86,6 +94,8 @@ class CustomerController extends AbstractController
 
         $this->customerRepository->remove($customer, true);
 
-        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.']);
+        return new JsonResponse(['message' => 'Ce-tte client-e ne fait maintenant plus partie de votre clientèle.'],
+        Response::HTTP_NO_CONTENT
+    );
     }
 }
