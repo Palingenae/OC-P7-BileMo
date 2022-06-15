@@ -15,31 +15,31 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups('customers')]
+    #[Groups(['list_customers', 'one_customer'])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('customers')]
+    #[Groups(['list_customers', 'one_customer'])]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('customers')]
+    #[Groups(['list_customers', 'one_customer'])]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('customers')]
+    #[Groups(['list_customers', 'one_customer'])]
     private string $postalAddress;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('customers')]
+    #[Groups(['list_customers', 'one_customer'])]
     private string $phoneNumber;
 
     #[ORM\ManyToOne(targetEntity: Partner::class, inversedBy: 'customers')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['customers', 'reseller'])]
+    #[Groups(['one_customer', 'reseller'])]
     private Partner $reseller;
 
     #[ORM\Column(type: 'json')]

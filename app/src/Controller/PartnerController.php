@@ -35,7 +35,7 @@ class PartnerController extends AbstractController
             );
         }
 
-        $normalizedPartner = $normalizer->normalize($partner, 'json', ['groups' => ['partners', 'customers']]);
+        $normalizedPartner = $normalizer->normalize($partner, 'json', ['groups' => ['partners', 'list_customers']]);
 
         return new JsonResponse($normalizedPartner, 200);
     }
@@ -59,7 +59,7 @@ class PartnerController extends AbstractController
             );
         }
 
-        $normalizedPartner = $normalizer->normalize($customer, 'json', ['groups' => ['reseller', 'customers']]);
+        $normalizedPartner = $normalizer->normalize($customer, 'json', ['groups' => ['reseller', 'one_customer']]);
 
         return new JsonResponse($normalizedPartner, 200);
     }
